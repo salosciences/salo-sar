@@ -8,7 +8,7 @@ repos:
   rev: stable
   hooks:
     - id: black
-      args: ["sarlo", "--line-length=120", "--target-version=py37"]
+      args: ["sarlo", "--line-length=880", "--target-version=py37"]
 - repo: https://github.com/pycqa/flake8
   rev: master
   hooks:
