@@ -1,4 +1,4 @@
-name: sar
+name: sarlo
 
 channels:
   - conda-forge
@@ -26,6 +26,3 @@ dependencies:
   - scikit-learn
   - shapely
   - pip
-  - pip:
-    - nbstripout
-    - nbconvert

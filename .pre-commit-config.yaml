@@ -8,16 +8,12 @@ repos:
   rev: stable
   hooks:
     - id: black
-      args: ["sarlo", "--line-length=880", "--target-version=py37"]
+      args: ["sarlo", "--line-length=120", "--target-version=py37"]
 - repo: https://github.com/pycqa/flake8
   rev: master
   hooks:
     - id: flake8
       args: ["--select=C,E,F,W,B,B950", "--max-line-length=88", "--ignore=E203,E501,W503,F401"]
-- repo: https://github.com/kynan/nbstripout
-  rev: master
-  hooks:
-    - id: nbstripout
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v2.4.0
   hooks:
