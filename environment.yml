@@ -25,7 +25,3 @@ dependencies:
   - rtree
   - scikit-learn
   - shapely
-  - pip
-  - pip:
-    - nbstripout
-    - nbconvert
