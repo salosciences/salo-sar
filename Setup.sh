@@ -1,6 +1,7 @@
-if test -d "Retrieved Data/SAR_CH3";then
+if test -d "/Retrieved Data/SAR_CH3/";then
     echo "Directory exists"
 else
+    mkdir "Retrieved Data"
     mkdir "Retrieved Data/SAR_CH3"
 fi
 
