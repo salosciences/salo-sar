@@ -51,5 +51,8 @@ Thumbs.db
 # Jupyter files
 */.ipynb_checkpoints/*
 
+# SERVIR Data
+*/Retrieved Data/*
+
 # Chris problems
 .zedstate
