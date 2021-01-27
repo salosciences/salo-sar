@@ -555,7 +555,7 @@ def cal_KB(dp, edges, start_scene, link, directory, Nd_pairwise, Nd_self, bin_si
         for i in range(edges):
             print ("cal_KB_pwn started at " + (time.strftime("%H:%M:%S")))
             k_temp, b_temp = cal_KB_pairwise_new(int(link[i, 0]), int(link[i, 1]), dp[int((2*link[i, 0])-2)], dp[int((2*link[i, 0])-1)], dp[int((2*link[i, 1])-2)], dp[int((2*link[i, 1])-1)], directory, Nd_pairwise, bin_size)
-            print ("cal_KB_pwn finished at " + (time.strftime("%H:%M:%S")))
+            print ("cal_KB_pwn iteration %d completed at " % i + (time.strftime("%H:%M:%S")))
             YY[2 * i] = k_temp
             YY[(2 * i) + 1] = b_temp
 
