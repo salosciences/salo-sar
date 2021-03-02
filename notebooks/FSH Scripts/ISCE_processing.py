@@ -6,8 +6,8 @@ import sys
 
 
 # For data download to succeed, user must have .netrc file in their home directory to store their username and password.
-def Write_isce_xml(outDir):
-    isce = '''<?xml version="1.0" encoding="UTF-8"?>
+def Write_input_xml(outDir):
+    input = '''<?xml version="1.0" encoding="UTF-8"?>
 
     <!-- NOTE: tag/attribute names must be in lower case -->
     <!--
@@ -48,8 +48,8 @@ def Write_isce_xml(outDir):
     <!--    <property name="do offsetprf">False</property> -->
         <property name="do outliers1">False</property>-->
         <property name="do prepareresamps">True</property>-->
-        <property name="do resamp">False</property>-->
-        <property name="do resamp image">False</property>-->
+        <property name="do resamp">True</property>-->
+        <property name="do resamp image">True</property>-->
         <property name="do crossmul">True</property>
         <property name="do mocomp baseline">True</property>
         <property name="do set topoint1">True</property>
@@ -68,9 +68,9 @@ def Write_isce_xml(outDir):
     </component>
     </isceApp>'''
 
-    print("writing Reference.xml")
-    with open(os.path.join(outDir, "Isce.xml"), "w") as fid:
-        fid.write(isce)
+    print("writing input.xml")
+    with open(os.path.join(outDir, "input.xml"), "w") as fid:
+        fid.write(input)
 
 def SENT_configure_inputs(outDir, date1, date2, file1, file2):
     cmd_reference_config = '''<?xml version="1.0" encoding="UTF-8"?>
@@ -167,7 +167,7 @@ def ALOS_configure_inputs(outDir, date1, date2, file1, file2):
     with open(os.path.join(outDir, "secondary.xml"), "w") as fid:
         fid.write(cmd_secondary_config)
 
-    cmd_stripmap_config = """<?xml version="1.0" encoding="UTF-8"?>
+    cmd_stripmap_config = '''<?xml version="1.0" encoding="UTF-8"?>
     <stripmapApp>
     <component name="insar">
         <property name="sensor name">ALOS</property>
@@ -177,8 +177,18 @@ def ALOS_configure_inputs(outDir, date1, date2, file1, file2):
         <component name="secondary">
             <catalog>secondary.xml</catalog>
         </component>
+
+        <!--  
+        <property name="demFilename">
+            <value>demLat_N18_N21_Lon_W156_W154.dem.wgs84</value>
+        </property>
+        -->
+
+        <property name="do rubbersheetingAzimuth">True</property>
+        <property name="do rubbersheetingRange">True</property>
+        <property name="do denseoffsets">True</property>
     </component>
-    </stripmapApp>"""
+    </stripmapApp>'''
 
     print("writing stripmapApp.xml")
     with open(os.path.join(outDir, "stripmapApp.xml"), "w") as fid:
@@ -243,9 +253,9 @@ def XML(Sensor, link1, link2):
         zip2 = os.path.basename(os.path.normpath(link2))  # isolating initial zip file
         if not os.path.exists(os.path.join(data_dir, zip2)):
             os.system(cmd2)
-        else:
-            print(zip2, " already exists")
             os.system("unzip  %s" % zip2)
+        else:
+            print(zip2, " already exists") 
     
     SCDT1 = "{0}/{1}".format(zip1[:-4], "%s.l0.workreport" % zip1[:-9])
     with open(SCDT1, "r") as myfile:
@@ -271,7 +281,7 @@ def XML(Sensor, link1, link2):
     os.chdir(process_dir)
 
     if Sensor == "ALOS1":
-        Write_isce_xml(process_dir)
+        Write_input_xml(process_dir)
         ALOS_configure_inputs(process_dir, date1, date2, zip1[:-4], zip2[:-4])  # Writing reference secondary and stripmap XML
     elif Sensor == "Sentinel1":
         sys.exit("Sentinel 1 not configured yet")
